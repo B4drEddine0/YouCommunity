@@ -1,3 +1,15 @@
+{{-- 
+    Routes needed for this navigation:
+    
+    Route::get('/events', [EventController::class, 'index'])->name('events.index');
+    Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
+    Route::get('/events/my', [EventController::class, 'myEvents'])->name('events.my');
+    Route::get('/events/participating', [EventController::class, 'participating'])->name('events.participating');
+    
+    Route::get('/communities', [CommunityController::class, 'index'])->name('communities.index');
+    Route::get('/communities/my', [CommunityController::class, 'myCommunities'])->name('communities.my');
+--}}
+
 <nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -6,20 +18,43 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                        <div class="flex-shrink-0 flex items-center">
+                            <h1 class="text-2xl font-bold text-indigo-600">YouCommunity</h1>
+                        </div>
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        {{ __('Accueil') }}
+                    </x-nav-link>
+                    {{-- Will need route: events.index --}}
+                    <x-nav-link href="#" :active="request()->routeIs('events.*')">
+                        {{ __('Événements') }}
+                    </x-nav-link>
+                    {{-- Will need route: events.create --}}
+                    <x-nav-link href="#" :active="request()->routeIs('events.create')">
+                        {{ __('Créer un événement') }}
+                    </x-nav-link>
+                    {{-- Will need route: communities.index --}}
+                    <x-nav-link href="#" :active="request()->routeIs('communities.*')">
+                        {{ __('Communautés') }}
                     </x-nav-link>
                 </div>
             </div>
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
+                <!-- Notifications -->
+                <button class="relative p-2 text-gray-400 hover:text-gray-500 focus:outline-none">
+                    <span class="sr-only">{{ __('Notifications') }}</span>
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                    </svg>
+                    <span class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-400 ring-2 ring-white"></span>
+                </button>
+
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
@@ -35,8 +70,25 @@
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
+                            {{ __('Mon profil') }}
                         </x-dropdown-link>
+
+                        {{-- Will need route: events.my --}}
+                        <x-dropdown-link href="#">
+                            {{ __('Mes événements') }}
+                        </x-dropdown-link>
+
+                        {{-- Will need route: events.participating --}}
+                        <x-dropdown-link href="#">
+                            {{ __('Mes participations') }}
+                        </x-dropdown-link>
+
+                        {{-- Will need route: communities.my --}}
+                        <x-dropdown-link href="#">
+                            {{ __('Mes communautés') }}
+                        </x-dropdown-link>
+
+                        <div class="border-t border-gray-200 dark:border-gray-600"></div>
 
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
@@ -45,7 +97,7 @@
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                                {{ __('Déconnexion') }}
                             </x-dropdown-link>
                         </form>
                     </x-slot>
@@ -68,7 +120,19 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+                {{ __('Accueil') }}
+            </x-responsive-nav-link>
+            {{-- Will need route: events.index --}}
+            <x-responsive-nav-link href="#" :active="request()->routeIs('events.*')">
+                {{ __('Événements') }}
+            </x-responsive-nav-link>
+            {{-- Will need route: events.create --}}
+            <x-responsive-nav-link href="#" :active="request()->routeIs('events.create')">
+                {{ __('Créer un événement') }}
+            </x-responsive-nav-link>
+            {{-- Will need route: communities.index --}}
+            <x-responsive-nav-link href="#" :active="request()->routeIs('communities.*')">
+                {{ __('Communautés') }}
             </x-responsive-nav-link>
         </div>
 
@@ -81,7 +145,22 @@
 
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
+                    {{ __('Mon profil') }}
+                </x-responsive-nav-link>
+
+                {{-- Will need route: events.my --}}
+                <x-responsive-nav-link href="#">
+                    {{ __('Mes événements') }}
+                </x-responsive-nav-link>
+
+                {{-- Will need route: events.participating --}}
+                <x-responsive-nav-link href="#">
+                    {{ __('Mes participations') }}
+                </x-responsive-nav-link>
+
+                {{-- Will need route: communities.my --}}
+                <x-responsive-nav-link href="#">
+                    {{ __('Mes communautés') }}
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
@@ -91,7 +170,7 @@
                     <x-responsive-nav-link :href="route('logout')"
                             onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        {{ __('Log Out') }}
+                        {{ __('Déconnexion') }}
                     </x-responsive-nav-link>
                 </form>
             </div>
