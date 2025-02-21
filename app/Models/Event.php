@@ -10,8 +10,6 @@ class Event extends Model
         'titre',
         'description',
         'lieu',
-        'latitude',
-        'longitude',
         'date_heure',
         'categorie',
         'user_id',
@@ -37,8 +35,4 @@ class Event extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public function participants()
-    {
-        return $this->belongsToMany(User::class, 'rsvps');
-    }
 }

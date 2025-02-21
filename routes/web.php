@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\RSVPController;
+use App\Models\RSVP;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -18,3 +21,12 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+
+Route::get('/events', [EventController::class, 'index']);
+Route::post('/events', [EventController::class, 'store'])->name('events');
+Route::delete('/events/{id}', [EventController::class, 'destroy'])->name('event.destroy');
+Route::get('/reservation', [RSVPController::class, 'index']);
+Route::post('/reservation', [RSVPController::class, 'create']);
+
+

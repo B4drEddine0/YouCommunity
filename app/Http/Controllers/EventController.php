@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Event;
+use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
@@ -11,7 +13,8 @@ class EventController extends Controller
      */
     public function index()
     {
-        //
+        $events = Event::all();
+        return view('evenement',compact('events'));
     }
 
     /**
@@ -19,7 +22,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        //
+        // $event = Event::create($request->all());
     }
 
     /**
@@ -27,7 +30,17 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $event = $request->validate([
+            'titre' => 'required|string',
+            'description' => 'required|string',
+            'lieu' => 'required|string',
+            'date_heure' => 'required|date',
+            'categorie' => 'required|string',
+            'max_participants' => 'required|integer|min:1',
+        ]);
+
+         Event::create(array_merge($event,['user_id' => Auth::id()]));
+         return redirect()->route('events');
     }
 
     /**
@@ -59,6 +72,8 @@ class EventController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $del = Event::findOrFail($id);
+        $del->delete();
+        return redirect()->route('events');
     }
 }

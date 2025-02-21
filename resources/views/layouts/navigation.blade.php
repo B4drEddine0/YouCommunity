@@ -1,21 +1,10 @@
-{{-- 
-    Routes needed for this navigation:
-    
-    Route::get('/events', [EventController::class, 'index'])->name('events.index');
-    Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
-    Route::get('/events/my', [EventController::class, 'myEvents'])->name('events.my');
-    Route::get('/events/participating', [EventController::class, 'participating'])->name('events.participating');
-    
-    Route::get('/communities', [CommunityController::class, 'index'])->name('communities.index');
-    Route::get('/communities/my', [CommunityController::class, 'myCommunities'])->name('communities.my');
---}}
 
 <nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
-    <!-- Primary Navigation Menu -->
+
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
-                <!-- Logo -->
+                
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
                         <div class="flex-shrink-0 flex items-center">
@@ -24,29 +13,24 @@
                     </a>
                 </div>
 
-                <!-- Navigation Links -->
+        
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Accueil') }}
                     </x-nav-link>
-                    {{-- Will need route: events.index --}}
-                    <x-nav-link href="#" :active="request()->routeIs('events.*')">
+                  
+                    <x-nav-link href="/events">
                         {{ __('Événements') }}
                     </x-nav-link>
-                    {{-- Will need route: events.create --}}
-                    <x-nav-link href="#" :active="request()->routeIs('events.create')">
-                        {{ __('Créer un événement') }}
-                    </x-nav-link>
-                    {{-- Will need route: communities.index --}}
-                    <x-nav-link href="#" :active="request()->routeIs('communities.*')">
-                        {{ __('Communautés') }}
+                   
+                    <x-nav-link href="/reservation">
+                        {{ __('Reservations') }}
                     </x-nav-link>
                 </div>
             </div>
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <!-- Notifications -->
                 <button class="relative p-2 text-gray-400 hover:text-gray-500 focus:outline-none">
                     <span class="sr-only">{{ __('Notifications') }}</span>
                     <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -73,19 +57,12 @@
                             {{ __('Mon profil') }}
                         </x-dropdown-link>
 
-                        {{-- Will need route: events.my --}}
-                        <x-dropdown-link href="#">
+                        <x-dropdown-link href="/events">
                             {{ __('Mes événements') }}
                         </x-dropdown-link>
 
-                        {{-- Will need route: events.participating --}}
-                        <x-dropdown-link href="#">
+                        <x-dropdown-link href="/reservation">
                             {{ __('Mes participations') }}
-                        </x-dropdown-link>
-
-                        {{-- Will need route: communities.my --}}
-                        <x-dropdown-link href="#">
-                            {{ __('Mes communautés') }}
                         </x-dropdown-link>
 
                         <div class="border-t border-gray-200 dark:border-gray-600"></div>
@@ -116,27 +93,21 @@
         </div>
     </div>
 
-    <!-- Responsive Navigation Menu -->
+
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Accueil') }}
             </x-responsive-nav-link>
-            {{-- Will need route: events.index --}}
-            <x-responsive-nav-link href="#" :active="request()->routeIs('events.*')">
+            <x-responsive-nav-link href="/events">
                 {{ __('Événements') }}
             </x-responsive-nav-link>
-            {{-- Will need route: events.create --}}
-            <x-responsive-nav-link href="#" :active="request()->routeIs('events.create')">
-                {{ __('Créer un événement') }}
-            </x-responsive-nav-link>
-            {{-- Will need route: communities.index --}}
-            <x-responsive-nav-link href="#" :active="request()->routeIs('communities.*')">
-                {{ __('Communautés') }}
+            <x-responsive-nav-link href="/reservation">
+                {{ __('Reservations') }}
             </x-responsive-nav-link>
         </div>
 
-        <!-- Responsive Settings Options -->
+
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
             <div class="px-4">
                 <div class="font-medium text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
@@ -148,19 +119,12 @@
                     {{ __('Mon profil') }}
                 </x-responsive-nav-link>
 
-                {{-- Will need route: events.my --}}
-                <x-responsive-nav-link href="#">
+                <x-responsive-nav-link href="/events">
                     {{ __('Mes événements') }}
                 </x-responsive-nav-link>
 
-                {{-- Will need route: events.participating --}}
-                <x-responsive-nav-link href="#">
+                <x-responsive-nav-link href="/reservation">
                     {{ __('Mes participations') }}
-                </x-responsive-nav-link>
-
-                {{-- Will need route: communities.my --}}
-                <x-responsive-nav-link href="#">
-                    {{ __('Mes communautés') }}
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
