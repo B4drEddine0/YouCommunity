@@ -13,7 +13,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        $events = Event::all();
+        $events = Event::paginate(6);
         return view('evenement',compact('events'));
     }
 
@@ -46,9 +46,12 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Event $event)
     {
-        //
+        return view('show', [
+            'event' => $event,
+            'comments' => $event->comments()->with('user')->latest()->get()
+        ]);
     }
 
     /**
@@ -64,7 +67,18 @@ class EventController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $event = $request->validate([
+            'titre' => 'required|string',
+            'description' => 'required|string',
+            'lieu' => 'required|string',
+            'date_heure' => 'required|date',
+            'categorie' => 'required|string',
+            'max_participants' => 'required|integer|min:1',
+        ]);
+
+         $eve = Event::findOrFail($id);
+         $eve->update(array_merge($event,['user_id' => Auth::id()]));
+         return redirect()->route('events');
     }
 
     /**
@@ -75,5 +89,19 @@ class EventController extends Controller
         $del = Event::findOrFail($id);
         $del->delete();
         return redirect()->route('events');
+    }
+
+    public function storeComment(Request $request, Event $event)
+    {
+        $validated = $request->validate([
+            'content' => 'required|string|max:1000'
+        ]);
+
+        $comment = $event->comments()->create([
+            'content' => $validated['content'],
+            'user_id' => auth()->id()
+        ]);
+
+        return back()->with('success', 'Comment added successfully!');
     }
 }
