@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Event;
+use App\Models\Rsvp;
+use Illuminate\Support\Facades\Auth;
 
 class RSVPController extends Controller
 {
@@ -11,15 +14,23 @@ class RSVPController extends Controller
      */
     public function index()
     {
-        return view('reserve');
+        $rsvps = Rsvp::with('event')
+            ->where('user_id', Auth::id())
+            ->paginate(6);
+        return view('reserve', compact('rsvps'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Event $event)
     {
-        //
+        $rsvp = Rsvp::create([
+            'user_id' =>  Auth::id(),  
+            'event_id' => $event->id 
+        ]);
+
+        return redirect()->back();
     }
 
     /**
@@ -59,6 +70,8 @@ class RSVPController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $del = Rsvp::findOrFail($id);
+        $del->delete();
+        return redirect()->back();
     }
 }

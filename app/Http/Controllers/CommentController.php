@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Event;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
@@ -11,7 +13,7 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -25,9 +27,18 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Event $event)
     {
-        //
+        $validated = $request->validate([
+            'content' => 'required|string|max:1000'
+        ]);
+
+        $comment = $event->comments()->create([
+            'contenu' => $validated['content'],
+            'user_id' => auth::id()
+        ]);
+
+        return back();
     }
 
     /**

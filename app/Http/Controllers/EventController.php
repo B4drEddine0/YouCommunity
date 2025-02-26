@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Event;
+use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
@@ -13,8 +14,9 @@ class EventController extends Controller
      */
     public function index()
     {
+        $comments = Comment::all();
         $events = Event::paginate(6);
-        return view('evenement',compact('events'));
+        return view('evenement',compact('events','comments'));
     }
 
     /**
@@ -91,17 +93,5 @@ class EventController extends Controller
         return redirect()->route('events');
     }
 
-    public function storeComment(Request $request, Event $event)
-    {
-        $validated = $request->validate([
-            'content' => 'required|string|max:1000'
-        ]);
 
-        $comment = $event->comments()->create([
-            'content' => $validated['content'],
-            'user_id' => auth()->id()
-        ]);
-
-        return back()->with('success', 'Comment added successfully!');
-    }
 }

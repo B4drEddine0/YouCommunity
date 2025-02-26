@@ -55,7 +55,7 @@
                                 </svg>
                                 <span class="text-sm text-gray-500 dark:text-gray-400">{{$event->lieu}}</span>
                             </div>
-                            <a href="{{ route('show', $event) }}" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 font-medium text-sm">View Details →</a>
+                            <a href="{{ route('events.show', $event) }}" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 font-medium text-sm">View Details →</a>
                         </div>
                     </div>
                 </div>

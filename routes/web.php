@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Accueil;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\RSVPController;
@@ -19,8 +20,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
     // Event routes
-    Route::get('/events/{event}', [EventController::class, 'show'])->name('show');
-    Route::post('/events/{event}/comments', [EventController::class, 'storeComment'])->name('events.comments.store');
+    Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
+    Route::post('/events/{event}/comments', [CommentController::class, 'store'])->name('comments.store');
+
+    Route::post('/RSVP/{event}/reserve', [RSVPController::class, 'create'])->name('rsvps.create');
+    Route::delete('/RSVP/{id}', [RSVPController::class, 'destroy'])->name('rsvps.destroy');
 });
 
 require __DIR__.'/auth.php';
