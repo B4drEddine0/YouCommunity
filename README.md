@@ -92,25 +92,6 @@ Le projet sera développé en **Laravel 11** en suivant les bonnes pratiques du 
 
 ### 10. **Optimisation des Vues** 🔍
 - Utilisez la mise en cache des vues pour améliorer la vitesse de rendu des pages complexes.
-
----
-
-## 🧑‍🏫 Modalités Pédagogiques
-
-- **Travail individuel** : Réalisation complète du projet par l'étudiant.
-- **Durée** : 5 jours ⏳
-- **Date de lancement** : 17/02/2025 📅
-- **Date limite de soumission** : 21/02/2025 avant 17h30 ⏰
-
-### **Modalités d'Évaluation**
-1. **Simulation de l'application web** (5 minutes) 💻
-2. **Code Review + Questions Techniques** (5 minutes) 🧐
-3. **Mise en situation individuelle** (10 minutes) 🎤
-
-### **Livrables**
-- Code source propre sur GitHub 📁
-- Conception UML 📝
-
 ---
 
 ## 🛠️ Commandes Artisan Recommandées
